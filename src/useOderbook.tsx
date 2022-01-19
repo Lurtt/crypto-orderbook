@@ -7,7 +7,7 @@ interface Orderbook {
   asks: Order[];
 }
 
-const deltaReducer = (prevDelta: Order[], currDelta: Order) => {
+const reduceDeltaOrder = (prevDelta: Order[], currDelta: Order) => {
   const [price, size] = currDelta;
 
   if (size === 0) {
@@ -39,7 +39,6 @@ export const useOderbook = () => {
   const ascSortOrder = useCallback(([firstPrice]: Order, [secondPrice]: Order) => firstPrice - secondPrice, [])
   const descSortOrder = useCallback(([firstPrice]: Order, [secondPrice]: Order) => secondPrice - firstPrice, [])
 
-  // init WS
   useEffect(() => {
     sendJsonMessage({ event: "subscribe", feed: "book_ui_1", product_ids: ["PI_XBTUSD"] })
   }, [sendJsonMessage]);
@@ -50,20 +49,20 @@ export const useOderbook = () => {
     }
   }, [sendJsonMessage, documentVisibility])
 
-  // set the snapshot
   useEffect(() => {
     if (lastJsonMessage?.feed === 'book_ui_1_snapshot') {
       orders.current = { bids: lastJsonMessage.bids, asks: lastJsonMessage.asks }
     }
+  }, [lastJsonMessage])
 
-    // update values against snapshot
+  useEffect(() => {
     if (lastJsonMessage?.feed === 'book_ui_1') {
       if (lastJsonMessage.bids?.length || lastJsonMessage.asks?.length) {
-        orders.current.bids = lastJsonMessage?.bids
-          .reduce(deltaReducer, orders.current?.bids)
+        orders.current.bids = lastJsonMessage.bids
+          .reduce(reduceDeltaOrder, orders.current.bids)
           .sort(ascSortOrder)
-        orders.current.asks = lastJsonMessage?.asks
-          .reduce(deltaReducer, orders.current?.asks)
+        orders.current.asks = lastJsonMessage.asks
+          .reduce(reduceDeltaOrder, orders.current.asks)
           .sort(descSortOrder)
       }
     }
