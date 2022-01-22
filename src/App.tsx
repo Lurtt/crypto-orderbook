@@ -1,6 +1,8 @@
+import { FC } from 'react'
+
 import { Oderbook } from './Oderbook'
 
-function App() {
+const App: FC = () => {
   return (
     <div className="App">
       <header className="App-header">
