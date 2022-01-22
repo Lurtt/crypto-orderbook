@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 
-import { useOderbook } from './useOderbook'
+import { useOrderbook } from './useOrderbook'
 
 interface Props {
   data: Order
@@ -13,7 +13,7 @@ const Row: FC<Props> = ({ data }) => {
 }
 
 export const Oderbook: FC = () => {
-  const orders = useOderbook();
+  const state = useOrderbook({ maxRecords: 25 })
 
   const renderRow = useCallback((order) => <Row key={order[0]} data={order} />, [])
 
@@ -22,12 +22,12 @@ export const Oderbook: FC = () => {
       <div style={{ display: 'flex' }}>
         <div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
           <h1>BIDS/BUY</h1>
-          {orders.current.bids.map(renderRow)}
+          {state.bids.map(renderRow)}
         </div>
 
         <div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
           <h1>ASKS/SELL</h1>
-          {orders.current.asks.map(renderRow)}
+          {state.asks.map(renderRow)}
         </div>
       </div>
     </>
