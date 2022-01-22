@@ -7,6 +7,7 @@ type State = {
   bids: Order[]
   asks: Order[]
   product_ids: [string]
+  maxTotal: number
 }
 
 type SendJsonMessage = (jsonMessage: any, keep?: boolean) => void
@@ -30,13 +31,17 @@ const OrdersContext = React.createContext<{ dispatch: Dispatch; state: State } |
 const reduceDeltaOrders = (prevDelta: Order[], currDelta: Order) => {
   const [price, size] = currDelta;
 
+  const removeOrderByPrice = ([oldPrice]: Order) => oldPrice !== price;
+  const findByPrice = ([oldPrice]: Order) => oldPrice === price;
+  const saveOrder = (oldDelta: Order): Order => oldDelta[0] === price ? currDelta : oldDelta;
+
   if (size === 0) {
-    return prevDelta.filter(([oldPrice]) => oldPrice !== price);
+    return prevDelta.filter(removeOrderByPrice);
   }
 
   if (size > 0) {
-    if (prevDelta.find(([oldPrice]) => oldPrice === price)) {
-      return prevDelta.map((oldDelta) => oldDelta[0] === price ? currDelta : oldDelta)
+    if (prevDelta.find(findByPrice)) {
+      return prevDelta.map(saveOrder)
     }
 
     return [...prevDelta, currDelta];
@@ -49,6 +54,23 @@ const reduceDeltaOrders = (prevDelta: Order[], currDelta: Order) => {
 const ascOrders = ([firstPrice]: Order, [secondPrice]: Order) => firstPrice - secondPrice
 
 const descOrders = ([firstPrice]: Order, [secondPrice]: Order) => secondPrice - firstPrice
+
+const calculateTotals = (orders: Order[]): Order[] => {
+  let total = 0;
+
+  return orders.map(([price, size]) => {
+    total = total + size;
+
+    return [price, size, total];
+  });
+};
+
+const getTotalMaxValue = ({ bids, asks }: State) => {
+  const [, , lastBidTotal] = bids[bids.length - 1]
+  const [, , lastAskTotal] = asks[asks.length - 1]
+
+  return Math.max(lastBidTotal, lastAskTotal)
+}
 
 const ordersReducer = (draft: State, action: Action) => {
   switch (action.type) {
@@ -64,11 +86,17 @@ const ordersReducer = (draft: State, action: Action) => {
       break;
     case 'UPDATE_SNAPSHOT':
       draft.bids = action.payload.bids
-        .reduce(reduceDeltaOrders, draft.bids)
         .sort(descOrders)
+        .reduce(reduceDeltaOrders, draft.bids)
+
       draft.asks = action.payload.asks
-        .reduce(reduceDeltaOrders, draft.asks)
         .sort(ascOrders)
+        .reduce(reduceDeltaOrders, draft.asks)
+
+      draft.bids = calculateTotals(draft.bids)
+      draft.asks = calculateTotals(draft.asks)
+
+      draft.maxTotal = getTotalMaxValue(draft)
       break;
     case 'SLICE_SNAPSHOT':
       draft.bids = draft.bids.slice(0, action.payload.maxRecords)
@@ -87,6 +115,7 @@ export const OrdersProvider = ({ children }: OrdersProviderProps) => {
     bids: [],
     asks: [],
     product_ids: [PI_XBTUSD],
+    maxTotal: 0
   })
   const value = { state, dispatch }
 

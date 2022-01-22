@@ -49,7 +49,9 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
   }, [dispatch, lastJsonMessage])
 
   useEffect(() => {
-    dispatch({ type: 'SLICE_SNAPSHOT', payload: { maxRecords } })
+    if (FEED_BOOK_UI === lastJsonMessage?.feed) {
+      dispatch({ type: 'SLICE_SNAPSHOT', payload: { maxRecords } })
+    }
   }, [dispatch, lastJsonMessage, maxRecords])
 
   return state
