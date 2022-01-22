@@ -1,2 +1,1 @@
-type Order = [price: number, size: number]
-
+type Order = [price: number, size: number, total: number]
