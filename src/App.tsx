@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Oderbook } from './Oderbook'
+import { Oderbook } from 'components/Oderbook'
 
 const App: FC = () => {
   return (

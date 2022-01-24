@@ -1,14 +1,14 @@
 import React from 'react'
 import { useImmerReducer } from "use-immer";
 
-import { EVENT_SUBSCRIBE, EVENT_UNSUBSCRIBE, FEED_BOOK_UI, PI_XBTUSD } from './constants'
+import { EVENT_SUBSCRIBE, EVENT_UNSUBSCRIBE, FEED_BOOK_UI, PI_XBTUSD } from 'app-constants';
 import {
   reduceDeltaOrders,
   ascOrders,
   descOrders,
   calculateTotals,
   getTotalMaxValue
-} from './OrdersContextService'
+} from './OrdersContextService';
 
 type SendJsonMessage = (jsonMessage: any, keep?: boolean) => void
 

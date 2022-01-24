@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 
-import { useOrderbook } from './useOrderbook'
+import { useOrderbook } from 'hooks/useOrderbook'
 import { Indicator } from './Indicator'
 
 export const Oderbook: FC = () => {
