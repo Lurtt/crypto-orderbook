@@ -9,11 +9,7 @@ interface Props {
 export const Indicator: FC<Props> = ({ data, type, maxTotal }) => {
   const [price, size, total] = data
 
-  const stop = useMemo(() => {
-    const value = ((total / (maxTotal ?? 1)) * 100)
-
-    return value
-  }, [total, maxTotal])
+  const stop = useMemo(() => ((total / (maxTotal ?? 1)) * 100), [total, maxTotal])
 
   const background = useMemo(() => {
     if(type === 'buy') {
