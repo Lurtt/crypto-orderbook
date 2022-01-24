@@ -1,22 +1,22 @@
 import React from 'react'
 import { useImmerReducer } from "use-immer";
 
-import { EVENT_SUBSCRIBE, EVENT_UNSUBSCRIBE, FEED_BOOK_UI, PI_XBTUSD } from './constants'
-
-type State = {
-  bids: Order[]
-  asks: Order[]
-  product_ids: [string]
-  maxTotal: number
-}
+import { EVENT_SUBSCRIBE, EVENT_UNSUBSCRIBE, FEED_BOOK_UI, PI_XBTUSD } from 'app-constants';
+import {
+  reduceDeltaOrders,
+  ascOrders,
+  descOrders,
+  calculateTotals,
+  getTotalMaxValue
+} from './OrdersContextService';
 
 type SendJsonMessage = (jsonMessage: any, keep?: boolean) => void
 
 type Action =
   | { type: 'SUBSCRIBE'; payload: { sendJsonMessage: SendJsonMessage } }
   | { type: 'UNSUBSCRIBE'; payload: { sendJsonMessage: SendJsonMessage } }
-  | { type: 'CREATE_SNAPSHOT'; playload: State }
-  | { type: 'UPDATE_SNAPSHOT'; payload: State }
+  | { type: 'CREATE_SNAPSHOT'; playload: IndicatorState }
+  | { type: 'UPDATE_SNAPSHOT'; payload: IndicatorState }
   | { type: 'SLICE_SNAPSHOT'; payload: { maxRecords: number } }
   | { type: 'UPDATE_PRODUCT_IDS'; payload: { product_ids: [string] } }
 
@@ -24,55 +24,11 @@ type Dispatch = (action: Action) => void
 
 type OrdersProviderProps = { children: React.ReactNode };
 
-const OrdersContext = React.createContext<{ dispatch: Dispatch; state: State } | undefined>(
+const OrdersContext = React.createContext<{ dispatch: Dispatch; state: IndicatorState } | undefined>(
   undefined
 );
 
-const reduceDeltaOrders = (prevDelta: Order[], currDelta: Order) => {
-  const [price, size] = currDelta;
-
-  const removeOrderByPrice = ([oldPrice]: Order) => oldPrice !== price;
-  const findByPrice = ([oldPrice]: Order) => oldPrice === price;
-  const saveOrder = (oldDelta: Order): Order => oldDelta[0] === price ? currDelta : oldDelta;
-
-  if (size === 0) {
-    return prevDelta.filter(removeOrderByPrice);
-  }
-
-  if (size > 0) {
-    if (prevDelta.find(findByPrice)) {
-      return prevDelta.map(saveOrder)
-    }
-
-    return [...prevDelta, currDelta];
-  }
-
-  return prevDelta;
-
-}
-
-const ascOrders = ([firstPrice]: Order, [secondPrice]: Order) => firstPrice - secondPrice
-
-const descOrders = ([firstPrice]: Order, [secondPrice]: Order) => secondPrice - firstPrice
-
-const calculateTotals = (orders: Order[]): Order[] => {
-  let total = 0;
-
-  return orders.map(([price, size]) => {
-    total = total + size;
-
-    return [price, size, total];
-  });
-};
-
-const getTotalMaxValue = ({ bids, asks }: State) => {
-  const [, , lastBidTotal] = bids[bids.length - 1]
-  const [, , lastAskTotal] = asks[asks.length - 1]
-
-  return Math.max(lastBidTotal, lastAskTotal)
-}
-
-const ordersReducer = (draft: State, action: Action) => {
+const ordersReducer = (draft: IndicatorState, action: Action) => {
   switch (action.type) {
     case 'SUBSCRIBE':
       action.payload.sendJsonMessage({ event: EVENT_SUBSCRIBE, feed: FEED_BOOK_UI, product_ids: draft.product_ids })
@@ -111,7 +67,7 @@ const ordersReducer = (draft: State, action: Action) => {
 }
 
 export const OrdersProvider = ({ children }: OrdersProviderProps) => {
-  const [state, dispatch] = useImmerReducer<State, Action>(ordersReducer, {
+  const [state, dispatch] = useImmerReducer<IndicatorState, Action>(ordersReducer, {
     bids: [],
     asks: [],
     product_ids: [PI_XBTUSD],

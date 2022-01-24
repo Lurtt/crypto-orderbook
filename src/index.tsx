@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 import './index.css'
 
+import { OrdersProvider } from 'contexts/OrdersContext';
 import App from './App';
-import { OrdersProvider } from './OrdersContext';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(

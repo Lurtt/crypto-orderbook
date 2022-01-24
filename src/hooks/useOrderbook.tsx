@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import useWebSocket from 'react-use-websocket';
-import { useDocumentVisibility } from 'ahooks'
+import { useDocumentVisibility } from 'ahooks';
 
 import {
   WEBSOCKET_URL,
   DOCUMENT_VISIBILITY_HIDDEN,
   FEED_BOOK_UI_SNAPSHOT,
   FEED_BOOK_UI
-} from './constants'
-import { useOrders } from './OrdersContext';
+} from 'app-constants';
+import { useOrders } from 'contexts/OrdersContext';
 
 interface UseOrderbook {
   maxRecords: number
