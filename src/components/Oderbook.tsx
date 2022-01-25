@@ -1,12 +1,12 @@
 import { FC, useCallback } from 'react';
 
-import { useOrderbook } from 'hooks/useOrderbook'
-import { Indicator } from './Indicator'
+import { useOrderbook } from 'hooks/useOrderbook';
+import { Indicator } from './Indicator';
 
 export const Oderbook: FC = () => {
-  const { bids, asks, maxTotal } = useOrderbook({ maxRecords: 20 })
+  const { bids, asks, maxTotal } = useOrderbook({ maxRecords: 20 });
 
-  const renderRow = useCallback((type: IndicatorType) => (indicator: Indicator) => <Indicator key={indicator[0]} type={type} data={indicator} maxTotal={maxTotal} />, [maxTotal])
+  const renderRow = useCallback((type: IndicatorType) => (indicator: Indicator) => <Indicator key={indicator[0]} type={type} data={indicator} maxTotal={maxTotal} />, [maxTotal]);
 
   return (
     <div className="flex">
@@ -20,5 +20,5 @@ export const Oderbook: FC = () => {
         {asks.map(renderRow('sell'))}
       </div>
     </div>
-  )
-}
+  );
+};

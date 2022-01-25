@@ -1,5 +1,5 @@
 export const reduceDeltaIndicators = (prevDelta: Indicator[], currDelta: Indicator) => {
-  const [price, size] = currDelta;
+  const [ price, size ] = currDelta;
 
   const removeIndicatorByPrice = ([oldPrice]: Indicator) => oldPrice !== price;
   const findIndicatorByPrice = ([oldPrice]: Indicator) => oldPrice === price;
@@ -11,12 +11,12 @@ export const reduceDeltaIndicators = (prevDelta: Indicator[], currDelta: Indicat
 
   if (size > 0) {
     if (prevDelta.find(findIndicatorByPrice)) {
-      return prevDelta.map(saveIndicator)
+      return prevDelta.map(saveIndicator);
     }
 
-    return [...prevDelta, currDelta];
+    return [ ...prevDelta, currDelta ];
   }
 
   return prevDelta;
 
-}
+};

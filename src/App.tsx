@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import { FC } from 'react';
 
-import { Oderbook } from 'components/Oderbook'
+import { Oderbook } from 'components/Oderbook';
 
 const App: FC = () => {
   return (
@@ -11,6 +11,6 @@ const App: FC = () => {
       <Oderbook />
     </div>
   );
-}
+};
 
 export default App;
