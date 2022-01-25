@@ -8,7 +8,7 @@ import {
   FEED_BOOK_UI_SNAPSHOT,
   FEED_BOOK_UI
 } from 'app-constants';
-import { useIndicators } from 'contexts/IndicatorsContext';
+import { useIndicators } from 'contexts/indicators-context/IndicatorsContext';
 
 interface UseOrderbook {
   maxRecords: number

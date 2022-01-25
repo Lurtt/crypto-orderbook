@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './index.css'
 
-import { IndicatorsProvider } from 'contexts/IndicatorsContext';
+import { IndicatorsProvider } from 'contexts/indicators-context/IndicatorsContext';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

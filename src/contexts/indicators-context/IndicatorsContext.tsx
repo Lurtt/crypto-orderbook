@@ -2,13 +2,10 @@ import React from 'react'
 import { useImmerReducer } from "use-immer";
 
 import { EVENT_SUBSCRIBE, EVENT_UNSUBSCRIBE, FEED_BOOK_UI, PI_XBTUSD } from 'app-constants';
-import {
-  reduceDeltaIndicators,
-  ascIndicators,
-  descIndicators,
-  calculateTotals,
-  getTotalMaxValue
-} from './IndicatorsContextService';
+import { reduceDeltaIndicators } from './service/reduceDeltaIndicators';
+import { getTotalMaxValue } from './service/getTotalMaxValue'
+import { ascIndicators, descIndicators } from './service/sortIndicators'
+import { calculateTotals } from './service/calculateTotals'
 
 type SendJsonMessage = (jsonMessage: any, keep?: boolean) => void
 
