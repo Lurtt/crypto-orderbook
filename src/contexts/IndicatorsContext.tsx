@@ -3,12 +3,12 @@ import { useImmerReducer } from "use-immer";
 
 import { EVENT_SUBSCRIBE, EVENT_UNSUBSCRIBE, FEED_BOOK_UI, PI_XBTUSD } from 'app-constants';
 import {
-  reduceDeltaOrders,
-  ascOrders,
-  descOrders,
+  reduceDeltaIndicators,
+  ascIndicators,
+  descIndicators,
   calculateTotals,
   getTotalMaxValue
-} from './OrdersContextService';
+} from './IndicatorsContextService';
 
 type SendJsonMessage = (jsonMessage: any, keep?: boolean) => void
 
@@ -22,13 +22,13 @@ type Action =
 
 type Dispatch = (action: Action) => void
 
-type OrdersProviderProps = { children: React.ReactNode };
+type IndicatorsProviderProps = { children: React.ReactNode };
 
-const OrdersContext = React.createContext<{ dispatch: Dispatch; state: IndicatorState } | undefined>(
+const IndicatorsContext = React.createContext<{ dispatch: Dispatch; state: IndicatorState } | undefined>(
   undefined
 );
 
-const ordersReducer = (draft: IndicatorState, action: Action) => {
+const indicatorsReducer = (draft: IndicatorState, action: Action) => {
   switch (action.type) {
     case 'SUBSCRIBE':
       action.payload.sendJsonMessage({ event: EVENT_SUBSCRIBE, feed: FEED_BOOK_UI, product_ids: draft.product_ids })
@@ -42,12 +42,12 @@ const ordersReducer = (draft: IndicatorState, action: Action) => {
       break;
     case 'UPDATE_SNAPSHOT':
       draft.bids = action.payload.bids
-        .sort(descOrders)
-        .reduce(reduceDeltaOrders, draft.bids)
+        .sort(descIndicators)
+        .reduce(reduceDeltaIndicators, draft.bids)
 
       draft.asks = action.payload.asks
-        .sort(ascOrders)
-        .reduce(reduceDeltaOrders, draft.asks)
+        .sort(ascIndicators)
+        .reduce(reduceDeltaIndicators, draft.asks)
 
       draft.bids = calculateTotals(draft.bids)
       draft.asks = calculateTotals(draft.asks)
@@ -66,8 +66,8 @@ const ordersReducer = (draft: IndicatorState, action: Action) => {
   }
 }
 
-export const OrdersProvider = ({ children }: OrdersProviderProps) => {
-  const [state, dispatch] = useImmerReducer<IndicatorState, Action>(ordersReducer, {
+export const IndicatorsProvider = ({ children }: IndicatorsProviderProps) => {
+  const [state, dispatch] = useImmerReducer<IndicatorState, Action>(indicatorsReducer, {
     bids: [],
     asks: [],
     product_ids: [PI_XBTUSD],
@@ -75,14 +75,14 @@ export const OrdersProvider = ({ children }: OrdersProviderProps) => {
   })
   const value = { state, dispatch }
 
-  return <OrdersContext.Provider value={value}>{children}</OrdersContext.Provider>
+  return <IndicatorsContext.Provider value={value}>{children}</IndicatorsContext.Provider>
 }
 
-export const useOrders = () => {
-  const context = React.useContext(OrdersContext)
+export const useIndicators = () => {
+  const context = React.useContext(IndicatorsContext)
 
   if (context === undefined) {
-    throw new Error('useOrders must be used within a OrdersProvider');
+    throw new Error('useIndicators must be used within a IndicatorsProvider');
   }
 
   return context;
