@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom';
 
 import './index.css'
 
-import { OrdersProvider } from 'contexts/OrdersContext';
+import { IndicatorsProvider } from 'contexts/indicators-context/IndicatorsContext';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <OrdersProvider>
+    <IndicatorsProvider>
       <App />
-    </OrdersProvider>
+    </IndicatorsProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

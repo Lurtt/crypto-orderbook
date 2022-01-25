@@ -8,7 +8,7 @@ import {
   FEED_BOOK_UI_SNAPSHOT,
   FEED_BOOK_UI
 } from 'app-constants';
-import { useOrders } from 'contexts/OrdersContext';
+import { useIndicators } from 'contexts/indicators-context/IndicatorsContext';
 
 interface UseOrderbook {
   maxRecords: number
@@ -22,7 +22,7 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
   } = useWebSocket(WEBSOCKET_URL, {
     shouldReconnect: () => true,
   });
-  const { state, dispatch } = useOrders();
+  const { state, dispatch } = useIndicators();
 
   useEffect(() => {
     if (DOCUMENT_VISIBILITY_HIDDEN === documentVisibility) {

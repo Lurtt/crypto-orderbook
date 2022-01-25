@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react';
 
 interface Props {
-  data: Order
+  data: Indicator
   type: IndicatorType
   maxTotal: number
 }
