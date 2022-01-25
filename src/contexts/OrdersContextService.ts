@@ -1,9 +1,9 @@
-export const reduceDeltaOrders = (prevDelta: Order[], currDelta: Order) => {
+export const reduceDeltaOrders = (prevDelta: Indicator[], currDelta: Indicator) => {
   const [price, size] = currDelta;
 
-  const removeOrderByPrice = ([oldPrice]: Order) => oldPrice !== price;
-  const findByPrice = ([oldPrice]: Order) => oldPrice === price;
-  const saveOrder = (oldDelta: Order): Order => oldDelta[0] === price ? currDelta : oldDelta;
+  const removeOrderByPrice = ([oldPrice]: Indicator) => oldPrice !== price;
+  const findByPrice = ([oldPrice]: Indicator) => oldPrice === price;
+  const saveOrder = (oldDelta: Indicator): Indicator => oldDelta[0] === price ? currDelta : oldDelta;
 
   if (size === 0) {
     return prevDelta.filter(removeOrderByPrice);
@@ -21,11 +21,11 @@ export const reduceDeltaOrders = (prevDelta: Order[], currDelta: Order) => {
 
 }
 
-export const ascOrders = ([firstPrice]: Order, [secondPrice]: Order) => firstPrice - secondPrice
+export const ascOrders = ([firstPrice]: Indicator, [secondPrice]: Indicator) => firstPrice - secondPrice
 
-export const descOrders = ([firstPrice]: Order, [secondPrice]: Order) => secondPrice - firstPrice
+export const descOrders = ([firstPrice]: Indicator, [secondPrice]: Indicator) => secondPrice - firstPrice
 
-export const calculateTotals = (orders: Order[]): Order[] => {
+export const calculateTotals = (orders: Indicator[]): Indicator[] => {
   let total = 0;
 
   return orders.map(([price, size]) => {
