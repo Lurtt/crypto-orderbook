@@ -6,7 +6,7 @@ import {
   WEBSOCKET_URL,
   DOCUMENT_VISIBILITY_HIDDEN,
   FEED_BOOK_UI_SNAPSHOT,
-  FEED_BOOK_UI
+  FEED_BOOK_UI,
 } from 'app-constants';
 import { useIndicators } from 'contexts/indicators-context/IndicatorsContext';
 
@@ -26,33 +26,33 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
 
   useEffect(() => {
     if (DOCUMENT_VISIBILITY_HIDDEN === documentVisibility) {
-      dispatch({ type: 'UNSUBSCRIBE', payload: { sendJsonMessage } })
+      dispatch({ type: 'UNSUBSCRIBE', payload: { sendJsonMessage } });
     }
-  }, [dispatch, sendJsonMessage, documentVisibility])
+  }, [ dispatch, sendJsonMessage, documentVisibility ]);
 
   useEffect(() => {
-    dispatch({ type: 'SUBSCRIBE', payload: { sendJsonMessage } })
-  }, [dispatch, sendJsonMessage]);
+    dispatch({ type: 'SUBSCRIBE', payload: { sendJsonMessage } });
+  }, [ dispatch, sendJsonMessage ]);
 
   useEffect(() => {
     if (FEED_BOOK_UI_SNAPSHOT === lastJsonMessage?.feed) {
-      dispatch({ type: 'CREATE_SNAPSHOT', playload: lastJsonMessage })
+      dispatch({ type: 'CREATE_SNAPSHOT', playload: lastJsonMessage });
     }
-  }, [dispatch, lastJsonMessage])
+  }, [ dispatch, lastJsonMessage ]);
 
   useEffect(() => {
     if (FEED_BOOK_UI === lastJsonMessage?.feed) {
       if (lastJsonMessage.bids?.length || lastJsonMessage.asks?.length) {
-        dispatch({ type: 'UPDATE_SNAPSHOT', payload: lastJsonMessage })
+        dispatch({ type: 'UPDATE_SNAPSHOT', payload: lastJsonMessage });
       }
     }
-  }, [dispatch, lastJsonMessage])
+  }, [ dispatch, lastJsonMessage ]);
 
   useEffect(() => {
     if (FEED_BOOK_UI === lastJsonMessage?.feed) {
-      dispatch({ type: 'SLICE_SNAPSHOT', payload: { maxRecords } })
+      dispatch({ type: 'SLICE_SNAPSHOT', payload: { maxRecords } });
     }
-  }, [dispatch, lastJsonMessage, maxRecords])
+  }, [ dispatch, lastJsonMessage, maxRecords ]);
 
-  return state
-}
+  return state;
+};
