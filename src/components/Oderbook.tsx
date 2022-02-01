@@ -10,21 +10,20 @@ export const Oderbook: FC = () => {
 
   const renderRow = useCallback((type: IndicatorType) => (indicator: Indicator) => <Indicator key={indicator[0]} type={type} data={indicator} maxTotal={maxTotal} />, [maxTotal]);
 
-  
   return (
     <>
-    <button onClick={() => dispatch({ type: 'TOGGLE_MARKETS', payload: { sendJsonMessage } })}>TOGGLE MARKET</button>
-    <div className="flex">
-      <div className="flex flex-1 flex-col">
-        <h1>BIDS/BUY</h1>
-        {bids.map(renderRow('buy'))}
-      </div>
+      <button onClick={() => dispatch({ type: 'TOGGLE_MARKETS', payload: { sendJsonMessage } })}>TOGGLE MARKET</button>
+      <div className="flex">
+        <div className="flex flex-1 flex-col">
+          <h1>BIDS/BUY</h1>
+          {bids.map(renderRow('buy'))}
+        </div>
 
-      <div className="flex flex-1 flex-col">
-        <h1>ASKS/SELL</h1>
-        {asks.map(renderRow('sell'))}
+        <div className="flex flex-1 flex-col">
+          <h1>ASKS/SELL</h1>
+          {asks.map(renderRow('sell'))}
+        </div>
       </div>
-    </div>
     </>
   );
 };

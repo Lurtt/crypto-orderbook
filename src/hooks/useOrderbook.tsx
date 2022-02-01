@@ -33,10 +33,10 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
   }, [ dispatch, sendJsonMessage, documentVisibility ]);
 
   useEffect(() => {
-    if( 1 === readyState) {
+    if (1 === readyState) {
       !state.isPaused && dispatch({ type: 'SUBSCRIBE', payload: { sendJsonMessage } });
     }
-    
+
   }, [ dispatch, sendJsonMessage, readyState, state.isPaused ]);
 
   useEffect(() => {
