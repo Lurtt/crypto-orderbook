@@ -59,5 +59,5 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
     }
   }, [ dispatch, lastJsonMessage, maxRecords ]);
 
-  return state;
+  return { sendJsonMessage, ...state };
 };
