@@ -7,4 +7,5 @@ type IndicatorState = {
   asks: Indicator[]
   product_ids: [string]
   maxTotal: number
+  isPaused: boolean
 }
