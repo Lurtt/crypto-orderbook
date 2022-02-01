@@ -12,6 +12,8 @@ type SendJsonMessage = (jsonMessage: any, keep?: boolean) => void
 type Action =
   | { type: 'SUBSCRIBE'; payload: { sendJsonMessage: SendJsonMessage } }
   | { type: 'UNSUBSCRIBE'; payload: { sendJsonMessage: SendJsonMessage } }
+  | { type: 'PAUSE' }
+  | { type: 'CONTINUE' }
   | { type: 'CREATE_SNAPSHOT'; playload: IndicatorState }
   | { type: 'UPDATE_SNAPSHOT'; payload: IndicatorState }
   | { type: 'SLICE_SNAPSHOT'; payload: { maxRecords: number } }
@@ -32,6 +34,12 @@ const indicatorsReducer = (draft: IndicatorState, action: Action) => {
       break;
     case 'UNSUBSCRIBE':
       action.payload.sendJsonMessage({ event: EVENT_UNSUBSCRIBE, feed: FEED_BOOK_UI, product_ids: draft.product_ids });
+      break;
+    case 'PAUSE':
+      draft.isPaused = true;
+      break;
+    case 'CONTINUE':
+      draft.isPaused = false;
       break;
     case 'CREATE_SNAPSHOT':
       draft.bids = action.playload.bids;
@@ -69,6 +77,7 @@ export const IndicatorsProvider = ({ children }: IndicatorsProviderProps) => {
     asks: [],
     product_ids: [PI_XBTUSD],
     maxTotal: 0,
+    isPaused: false,
   });
   const value = { state, dispatch };
 
