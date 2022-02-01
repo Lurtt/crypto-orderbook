@@ -7,5 +7,6 @@ export const FEED_BOOK_UI = 'book_ui_1';
 export const FEED_BOOK_UI_SNAPSHOT = 'book_ui_1_snapshot';
 
 export const PI_XBTUSD = 'PI_XBTUSD';
+export const PI_ETHUSD = 'PI_ETHUSD';
 
 export const DOCUMENT_VISIBILITY_HIDDEN = 'hidden';
