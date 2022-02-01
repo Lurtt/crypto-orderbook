@@ -1,7 +1,7 @@
 import React from 'react';
 import { useImmerReducer } from "use-immer";
 
-import { EVENT_SUBSCRIBE, EVENT_UNSUBSCRIBE, FEED_BOOK_UI, PI_XBTUSD } from 'app-constants';
+import { EVENT_SUBSCRIBE, EVENT_UNSUBSCRIBE, FEED_BOOK_UI, PI_XBTUSD, PI_ETHUSD } from 'app-constants';
 import { reduceDeltaIndicators } from './service/reduceDeltaIndicators';
 import { getTotalMaxValue } from './service/getTotalMaxValue';
 import { ascIndicators, descIndicators } from './service/sortIndicators';
@@ -14,10 +14,10 @@ type Action =
   | { type: 'UNSUBSCRIBE'; payload: { sendJsonMessage: SendJsonMessage } }
   | { type: 'PAUSE' }
   | { type: 'CONTINUE' }
+  | { type: 'TOGGLE_MARKETS'; payload: { sendJsonMessage: SendJsonMessage } }
   | { type: 'CREATE_SNAPSHOT'; playload: IndicatorState }
   | { type: 'UPDATE_SNAPSHOT'; payload: IndicatorState }
   | { type: 'SLICE_SNAPSHOT'; payload: { maxRecords: number } }
-  | { type: 'UPDATE_PRODUCT_IDS'; payload: { product_ids: [string] } }
 
 type Dispatch = (action: Action) => void
 
@@ -41,6 +41,11 @@ const indicatorsReducer = (draft: IndicatorState, action: Action) => {
     case 'CONTINUE':
       draft.isPaused = false;
       break;
+    case 'TOGGLE_MARKETS':
+      action.payload.sendJsonMessage({ event: EVENT_UNSUBSCRIBE, feed: FEED_BOOK_UI, product_ids: draft.product_ids });
+      draft.product_ids = PI_XBTUSD === draft.product_ids[0] ? [PI_ETHUSD] : [PI_XBTUSD];
+      action.payload.sendJsonMessage({ event: EVENT_SUBSCRIBE, feed: FEED_BOOK_UI, product_ids: draft.product_ids });
+      break;
     case 'CREATE_SNAPSHOT':
       draft.bids = action.playload.bids;
       draft.asks = action.playload.asks;
@@ -62,9 +67,6 @@ const indicatorsReducer = (draft: IndicatorState, action: Action) => {
     case 'SLICE_SNAPSHOT':
       draft.bids = draft.bids.slice(0, action.payload.maxRecords);
       draft.asks = draft.asks.slice(0, action.payload.maxRecords);
-      break;
-    case 'UPDATE_PRODUCT_IDS':
-      draft.product_ids = action.payload.product_ids;
       break;
     default:
       throw new Error('Unhandled action type');
