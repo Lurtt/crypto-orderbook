@@ -19,6 +19,7 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
   const {
     lastJsonMessage,
     sendJsonMessage,
+    readyState,
   } = useWebSocket(WEBSOCKET_URL, {
     shouldReconnect: () => true,
   });
@@ -27,12 +28,16 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
   useEffect(() => {
     if (DOCUMENT_VISIBILITY_HIDDEN === documentVisibility) {
       dispatch({ type: 'UNSUBSCRIBE', payload: { sendJsonMessage } });
+      dispatch({ type: 'PAUSE' });
     }
   }, [ dispatch, sendJsonMessage, documentVisibility ]);
 
   useEffect(() => {
-    dispatch({ type: 'SUBSCRIBE', payload: { sendJsonMessage } });
-  }, [ dispatch, sendJsonMessage ]);
+    if( 1 === readyState) {
+      !state.isPaused && dispatch({ type: 'SUBSCRIBE', payload: { sendJsonMessage } });
+    }
+    
+  }, [ dispatch, sendJsonMessage, readyState, state.isPaused ]);
 
   useEffect(() => {
     if (FEED_BOOK_UI_SNAPSHOT === lastJsonMessage?.feed) {
