@@ -6,14 +6,14 @@
   "rules": {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
-      "error",
+      "warn",
       {
         "vars": "all",
         "args": "after-used",
         "ignoreRestSiblings": true
       }
     ],
-    "no-console": "error",
+    "no-console": "warn",
     "comma-dangle": [
       "error",
       "always-multiline"
