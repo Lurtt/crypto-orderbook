@@ -17,15 +17,15 @@ export const Oderbook: FC = () => {
   return (
     <>
       <OderbookContainer className='grid grid-cols-1 md:grid-cols-2'>
-        <div className='row-start-3 md:row-start-auto'>Spread: xx - xx</div>
+        <div className='row-start-4 md:row-start-auto'>Spread: xx - xx</div>
 
-        <div className='row-start-4 md:row-start-2'>
-          <IndicatorHeadline className='flex' />
+        <IndicatorHeadline className='hidden md:flex md:row-start-2' />
+        <div className='row-start-5 md:row-start-3'>
           {bids.map(renderBuyIndicator)}
         </div>
 
-        <div className='row-start-2'>
-          <IndicatorHeadline className='hidden md:flex md:flex-row-reverse md:text-right' />
+        <IndicatorHeadline className='row-start-2 flex md:flex-row-reverse md:row-start-2 md:text-right' />
+        <div className='row-start-3 flex flex-col-reverse md:flex-col'>
           {asks.map(renderSellIndicator)}
         </div>
       </OderbookContainer>
