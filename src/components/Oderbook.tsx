@@ -3,6 +3,7 @@ import { FC, useCallback } from 'react';
 import { useOrderbook } from 'hooks/useOrderbook';
 import { SellIndicator } from './SellIndicator';
 import { BuyIndicator } from './BuyIndicator';
+import { IndicatorHeadline } from './IndicatorHeadline';
 import { OderbookContainer } from './OderbookContainer';
 import { useIndicators } from 'contexts/indicators-context/IndicatorsContext';
 
@@ -19,20 +20,12 @@ export const Oderbook: FC = () => {
         <div className='row-start-3 md:row-start-auto'>Spread: xx - xx</div>
 
         <div>
-          <div className='flex'>
-            <div className='flex-1'>TOTAL</div>
-            <div className='flex-1'>SIZE</div>
-            <div className='flex-1'>PRICE</div>
-          </div>
+          <IndicatorHeadline className='flex' />
           {bids.map(renderBuyIndicator)}
         </div>
 
         <div>
-          <div className='hidden md:flex md:flex-row-reverse md:text-right'>
-            <div className='flex-1'>TOTAL</div>
-            <div className='flex-1'>SIZE</div>
-            <div className='flex-1'>PRICE</div>
-          </div>
+          <IndicatorHeadline className='hidden md:flex md:flex-row-reverse md:text-right' />
           {asks.map(renderSellIndicator)}
         </div>
       </OderbookContainer>
