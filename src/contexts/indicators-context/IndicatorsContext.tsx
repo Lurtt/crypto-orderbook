@@ -45,6 +45,7 @@ const indicatorsReducer = (draft: IndicatorState, action: Action) => {
       action.payload.sendJsonMessage({ event: EVENT_UNSUBSCRIBE, feed: FEED_BOOK_UI, product_ids: draft.product_ids });
       draft.product_ids = PI_XBTUSD === draft.product_ids[0] ? [PI_ETHUSD] : [PI_XBTUSD];
       action.payload.sendJsonMessage({ event: EVENT_SUBSCRIBE, feed: FEED_BOOK_UI, product_ids: draft.product_ids });
+      draft.isPaused = false;
       break;
     case 'CREATE_SNAPSHOT':
       draft.bids = action.playload.bids;
