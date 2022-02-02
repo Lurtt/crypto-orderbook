@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import { Oderbook } from 'components/Oderbook';
+import { Layout } from 'components/Layout';
 import { useIndicators } from 'contexts/indicators-context/IndicatorsContext';
 
 const App: FC = () => {
@@ -9,13 +10,10 @@ const App: FC = () => {
   const handleOnClick = () => dispatch({ type: 'CONTINUE' });
 
   return (
-    <div className="App">
-      <header className="App-header">
-        Orderbook
-      </header>
+    <Layout>
       {state.isPaused && <button onClick={handleOnClick}>CONTINUE</button>}
       <Oderbook />
-    </div>
+    </Layout>
   );
 };
 
