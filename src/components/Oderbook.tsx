@@ -1,29 +1,43 @@
 import { FC, useCallback } from 'react';
 
 import { useOrderbook } from 'hooks/useOrderbook';
-import { Indicator } from './Indicator';
+import { SellIndicator } from './SellIndicator';
+import { BuyIndicator } from './BuyIndicator';
+import { OderbookContainer } from './OderbookContainer';
 import { useIndicators } from 'contexts/indicators-context/IndicatorsContext';
 
 export const Oderbook: FC = () => {
   const { bids, asks, maxTotal, sendJsonMessage } = useOrderbook({ maxRecords: 20 });
   const { dispatch } = useIndicators();
 
-  const renderRow = useCallback((type: IndicatorType) => (indicator: Indicator) => <Indicator key={indicator[0]} type={type} data={indicator} maxTotal={maxTotal} />, [maxTotal]);
+  const renderSellIndicator = useCallback((indicator: Indicator) => <SellIndicator key={indicator[0]} data={indicator} maxTotal={maxTotal} />, [maxTotal]);
+  const renderBuyIndicator = useCallback((indicator: Indicator) => <BuyIndicator key={indicator[0]} data={indicator} maxTotal={maxTotal} />, [maxTotal]);
 
   return (
     <>
-      <button onClick={() => dispatch({ type: 'TOGGLE_MARKETS', payload: { sendJsonMessage } })}>TOGGLE MARKET</button>
-      <div className="flex">
-        <div className="flex flex-1 flex-col">
-          <h1>BIDS/BUY</h1>
-          {bids.map(renderRow('buy'))}
+      <OderbookContainer>
+        <div className='row-start-3 md:row-start-auto'>Spread: xx - xx</div>
+
+        <div>
+          <div className='flex'>
+            <div className='flex-1'>TOTAL</div>
+            <div className='flex-1'>SIZE</div>
+            <div className='flex-1'>PRICE</div>
+          </div>
+          {bids.map(renderBuyIndicator)}
         </div>
 
-        <div className="flex flex-1 flex-col">
-          <h1>ASKS/SELL</h1>
-          {asks.map(renderRow('sell'))}
+        <div>
+          <div className='hidden md:flex md:flex-row-reverse md:text-right'>
+            <div className='flex-1'>TOTAL</div>
+            <div className='flex-1'>SIZE</div>
+            <div className='flex-1'>PRICE</div>
+          </div>
+          {asks.map(renderSellIndicator)}
         </div>
-      </div>
+      </OderbookContainer>
+
+      <button className='block mt-8 mx-auto' onClick={() => dispatch({ type: 'TOGGLE_MARKETS', payload: { sendJsonMessage } })}>TOGGLE MARKET</button>
     </>
   );
 };
