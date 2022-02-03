@@ -1,5 +1,5 @@
 import React from 'react';
-import { useImmerReducer } from "use-immer";
+import { useImmerReducer } from 'use-immer';
 
 import { EVENT_SUBSCRIBE, EVENT_UNSUBSCRIBE, FEED_BOOK_UI, PI_XBTUSD, PI_ETHUSD } from 'app-constants';
 import { reduceDeltaIndicators } from './service/reduceDeltaIndicators';

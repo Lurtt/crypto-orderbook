@@ -27,7 +27,7 @@ export const Oderbook: FC = () => {
           {bids.map(renderBuyIndicator)}
         </div>
 
-        <IndicatorHeadline className='row-start-2 flex md:flex-row-reverse md:text-right' />
+        <IndicatorHeadline className='row-start-2 flex flex-row-reverse md:text-right' />
         <div className='row-start-3 flex flex-col-reverse md:flex-col'>
           {asks.map(renderSellIndicator)}
         </div>
