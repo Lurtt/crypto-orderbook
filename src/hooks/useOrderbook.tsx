@@ -20,9 +20,7 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
     lastJsonMessage,
     sendJsonMessage,
     readyState,
-  } = useWebSocket(WEBSOCKET_URL, {
-    shouldReconnect: () => true,
-  });
+  } = useWebSocket(WEBSOCKET_URL, { shouldReconnect: () => true });
   const { state, dispatch } = useIndicators();
 
   useEffect(() => {
@@ -48,14 +46,8 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
   useEffect(() => {
     if (FEED_BOOK_UI === lastJsonMessage?.feed) {
       if (lastJsonMessage.bids?.length || lastJsonMessage.asks?.length) {
-        dispatch({ type: 'UPDATE_SNAPSHOT', payload: lastJsonMessage });
+        dispatch({ type: 'UPDATE_SNAPSHOT', payload: { data: lastJsonMessage, maxRecords } });
       }
-    }
-  }, [ dispatch, lastJsonMessage ]);
-
-  useEffect(() => {
-    if (FEED_BOOK_UI === lastJsonMessage?.feed) {
-      dispatch({ type: 'SLICE_SNAPSHOT', payload: { maxRecords } });
     }
   }, [ dispatch, lastJsonMessage, maxRecords ]);
 
