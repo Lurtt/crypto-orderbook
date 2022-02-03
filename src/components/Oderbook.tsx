@@ -19,8 +19,8 @@ export const Oderbook: FC = () => {
 
   return (
     <div className='space-y-8'>
-      <OderbookContainer className='grid grid-cols-1 md:grid-cols-2'>
-        <div className='row-start-4 md:row-start-auto'>Spread: xx - xx</div>
+      <OderbookContainer className='grid grid-cols-1 md:grid-cols-2 items-center'>
+        <div className='row-start-4 text-center md:text-left md:row-start-auto py-1 text-slate-500'>Spread: 17.0 (0.05%)</div>
 
         <IndicatorHeadline className='hidden md:flex md:row-start-2' />
         <div className='row-start-5 md:row-start-3'>

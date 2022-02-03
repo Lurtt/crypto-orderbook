@@ -6,7 +6,7 @@ interface Props {
 
 export const Toast: FC<Props> = ({ onClick }) => (
   <div
-    className="sticky top-0 w-full max-w-xs p-4 mx-auto text-gray-500 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-400"
+    className="sticky top-4 w-full max-w-xs p-4 mx-auto text-gray-500 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-400"
     role="alert"
   >
     <div className="flex">

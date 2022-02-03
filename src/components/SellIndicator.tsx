@@ -10,13 +10,13 @@ export const SellIndicator: FC<Props> = ({ data, maxTotal }) => {
 
   const stop = useMemo(() => ((total / (maxTotal ?? 1)) * 100), [ total, maxTotal ]);
 
-  const background = useMemo(() => `linear-gradient(to right, #ef4444 ${stop}%, transparent ${stop}%)`, [stop]);
+  const background = useMemo(() => `linear-gradient(to right, #7f1d1d ${stop}%, transparent ${stop}%)`, [stop]);
 
   return (
-    <div style={{ background }} className='flex md:flex-row-reverse md:text-right'>
+    <div style={{ background }} className='flex md:flex-row-reverse md:text-right py-1'>
       <div className='flex-1'>{total}</div>
       <div className='flex-1'>{size}</div>
-      <div className='flex-1'>{price}</div>
+      <div className='flex-1 text-red-500'>{price}</div>
     </div>
   );
 };
