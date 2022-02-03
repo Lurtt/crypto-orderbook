@@ -8,6 +8,7 @@ import { IndicatorHeadline } from './IndicatorHeadline';
 import { OderbookContainer } from './OderbookContainer';
 import { ToggleMarket } from './ToggleMarket';
 import { Spread } from './Spread';
+import { Title } from './Title';
 
 export const Oderbook: FC = () => {
   const { bids, asks, maxTotal, sendJsonMessage } = useOrderbook({ maxRecords: 20 });
@@ -20,16 +21,17 @@ export const Oderbook: FC = () => {
 
   return (
     <div className='max-w-5xl mx-auto space-y-8'>
-      <OderbookContainer className='grid grid-cols-1 md:grid-cols-2 items-center'>
-        <Spread className="row-start-4  md:row-start-auto" />
+      <OderbookContainer className='grid grid-areas-mobile md:grid-areas-desktop'>
+        <Title className='grid-in-title'/>
+        <Spread className="grid-in-spread" />
 
-        <IndicatorHeadline className='hidden md:flex md:row-start-2' />
-        <div className='row-start-5 md:row-start-3'>
+        <IndicatorHeadline className='grid-in-bids-title hidden md:flex' />
+        <div className='grid-in-bids-data'>
           {bids.map(renderBuyIndicator)}
         </div>
 
-        <IndicatorHeadline className='row-start-2 flex flex-row-reverse md:text-right' />
-        <div className='row-start-3 flex flex-col-reverse md:flex-col'>
+        <IndicatorHeadline className='grid-in-asks-title flex flex-row-reverse md:text-right' />
+        <div className='grid-in-asks-data flex flex-col-reverse md:flex-col'>
           {asks.map(renderSellIndicator)}
         </div>
       </OderbookContainer>
