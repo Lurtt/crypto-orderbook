@@ -5,6 +5,7 @@ import { SellIndicator } from './SellIndicator';
 import { BuyIndicator } from './BuyIndicator';
 import { IndicatorHeadline } from './IndicatorHeadline';
 import { OderbookContainer } from './OderbookContainer';
+import { ToggleMarket } from './ToggleMarket';
 import { useIndicators } from 'contexts/indicators-context/IndicatorsContext';
 
 export const Oderbook: FC = () => {
@@ -14,8 +15,10 @@ export const Oderbook: FC = () => {
   const renderSellIndicator = useCallback((indicator: Indicator) => <SellIndicator key={indicator[0]} data={indicator} maxTotal={maxTotal} />, [maxTotal]);
   const renderBuyIndicator = useCallback((indicator: Indicator) => <BuyIndicator key={indicator[0]} data={indicator} maxTotal={maxTotal} />, [maxTotal]);
 
+  const handleToggleMarket = () => dispatch({ type: 'TOGGLE_MARKETS', payload: { sendJsonMessage } });
+
   return (
-    <>
+    <div className='space-y-8'>
       <OderbookContainer className='grid grid-cols-1 md:grid-cols-2'>
         <div className='row-start-4 md:row-start-auto'>Spread: xx - xx</div>
 
@@ -24,13 +27,13 @@ export const Oderbook: FC = () => {
           {bids.map(renderBuyIndicator)}
         </div>
 
-        <IndicatorHeadline className='row-start-2 flex md:flex-row-reverse md:row-start-2 md:text-right' />
+        <IndicatorHeadline className='row-start-2 flex md:flex-row-reverse md:text-right' />
         <div className='row-start-3 flex flex-col-reverse md:flex-col'>
           {asks.map(renderSellIndicator)}
         </div>
       </OderbookContainer>
 
-      <button className='block mt-8 mx-auto' onClick={() => dispatch({ type: 'TOGGLE_MARKETS', payload: { sendJsonMessage } })}>TOGGLE MARKET</button>
-    </>
+      <ToggleMarket onClick={handleToggleMarket} />
+    </div>
   );
 };
