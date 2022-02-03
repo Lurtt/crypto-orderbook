@@ -19,7 +19,7 @@ export const Oderbook: FC = () => {
   const handleToggleMarket = () => dispatch({ type: 'TOGGLE_MARKETS', payload: { sendJsonMessage } });
 
   return (
-    <div className='space-y-8'>
+    <div className='max-w-5xl mx-auto space-y-8'>
       <OderbookContainer className='grid grid-cols-1 md:grid-cols-2 items-center'>
         <Spread className="row-start-4  md:row-start-auto" />
 

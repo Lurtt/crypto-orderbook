@@ -10,4 +10,3 @@ export const OderbookContainer: FC<Props> = ({ className, children }) => (
     {children}
   </div>
 );
-
