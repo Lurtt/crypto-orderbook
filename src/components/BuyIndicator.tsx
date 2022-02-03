@@ -14,7 +14,6 @@ export const BuyIndicator: FC<Props> = ({ data, maxTotal }) => {
 
   const gradientDirection = useMemo(() => !responsive.md ? 'right' : 'left', [responsive.md]);
   const stop = useMemo(() => ((total / (maxTotal ?? 1)) * 100), [ total, maxTotal ]);
-
   const background = useMemo(() => `linear-gradient(to ${gradientDirection}, #064e3b ${stop}%, transparent ${stop}%)`, [ stop, gradientDirection ]);
 
   return (
