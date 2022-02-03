@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import useWebSocket from 'react-use-websocket';
-import { useDocumentVisibility, useDebounceEffect } from 'ahooks';
+import { useDocumentVisibility } from 'ahooks';
 
 import {
   WEBSOCKET_URL,
@@ -43,17 +43,11 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
     }
   }, [ dispatch, lastJsonMessage ]);
 
-  useDebounceEffect(() => {
-    if (FEED_BOOK_UI === lastJsonMessage?.feed) {
-      if (lastJsonMessage.bids?.length || lastJsonMessage.asks?.length) {
-        dispatch({ type: 'UPDATE_SNAPSHOT', payload: lastJsonMessage });
-      }
-    }
-  }, [ dispatch, lastJsonMessage ], { wait: 30 });
-
   useEffect(() => {
     if (FEED_BOOK_UI === lastJsonMessage?.feed) {
-      dispatch({ type: 'SLICE_SNAPSHOT', payload: { maxRecords } });
+      if (lastJsonMessage.bids?.length || lastJsonMessage.asks?.length) {
+        dispatch({ type: 'UPDATE_SNAPSHOT', payload: { data: lastJsonMessage, maxRecords } });
+      }
     }
   }, [ dispatch, lastJsonMessage, maxRecords ]);
 
