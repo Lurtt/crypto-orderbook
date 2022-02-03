@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import useWebSocket from 'react-use-websocket';
-import { useDocumentVisibility } from 'ahooks';
+import { useDocumentVisibility, useDebounceEffect } from 'ahooks';
 
 import {
   WEBSOCKET_URL,
@@ -20,9 +20,7 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
     lastJsonMessage,
     sendJsonMessage,
     readyState,
-  } = useWebSocket(WEBSOCKET_URL, {
-    shouldReconnect: () => true,
-  });
+  } = useWebSocket(WEBSOCKET_URL, { shouldReconnect: () => true });
   const { state, dispatch } = useIndicators();
 
   useEffect(() => {
@@ -45,13 +43,13 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
     }
   }, [ dispatch, lastJsonMessage ]);
 
-  useEffect(() => {
+  useDebounceEffect(() => {
     if (FEED_BOOK_UI === lastJsonMessage?.feed) {
       if (lastJsonMessage.bids?.length || lastJsonMessage.asks?.length) {
         dispatch({ type: 'UPDATE_SNAPSHOT', payload: lastJsonMessage });
       }
     }
-  }, [ dispatch, lastJsonMessage ]);
+  }, [ dispatch, lastJsonMessage ], { wait: 30 });
 
   useEffect(() => {
     if (FEED_BOOK_UI === lastJsonMessage?.feed) {
