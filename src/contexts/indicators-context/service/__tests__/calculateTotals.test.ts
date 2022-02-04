@@ -1,15 +1,5 @@
 import { calculateTotals } from '../calculateTotals';
 
-export const calculasteTotals = (indicators: Indicator[]): Indicator[] => {
-  let total = 0;
-
-  return indicators.map(([ price, size ]) => {
-    total = total + size;
-
-    return [ price, size, total ];
-  });
-};
-
 describe('calculateTotals', () => {
   it('returns empty array', () => {
     const result = calculateTotals([]);
