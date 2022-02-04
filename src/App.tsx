@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Oderbook } from 'components/Oderbook';
+import { Orderbook } from 'components/Orderbook';
 import { Layout } from 'components/Layout';
 import { Toast } from 'components/Toast';
 import { useIndicators } from 'contexts/indicators-context/IndicatorsContext';
@@ -13,7 +13,7 @@ const App: FC = () => {
   return (
     <Layout>
       {state.isPaused && <Toast onClick={handleOnClick} />}
-      <Oderbook />
+      <Orderbook />
     </Layout>
   );
 };
