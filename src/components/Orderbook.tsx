@@ -5,12 +5,12 @@ import { useOrderbook } from 'hooks/useOrderbook';
 import { SellIndicator } from './SellIndicator';
 import { BuyIndicator } from './BuyIndicator';
 import { IndicatorHeadline } from './IndicatorHeadline';
-import { OderbookContainer } from './OderbookContainer';
+import { OrderbookContainer } from './OrderbookContainer';
 import { ToggleMarket } from './ToggleMarket';
 import { Spread } from './Spread';
 import { Title } from './Title';
 
-export const Oderbook: FC = () => {
+export const Orderbook: FC = () => {
   const { bids, asks, maxTotal, sendJsonMessage } = useOrderbook({ maxRecords: 20 });
   const { dispatch } = useIndicators();
 
@@ -21,7 +21,7 @@ export const Oderbook: FC = () => {
 
   return (
     <div className='max-w-5xl mx-auto space-y-8'>
-      <OderbookContainer className='grid grid-areas-mobile md:grid-areas-desktop'>
+      <OrderbookContainer className='grid grid-areas-mobile md:grid-areas-desktop'>
         <Title className='grid-in-title'/>
         <Spread className="grid-in-spread" />
 
@@ -34,7 +34,7 @@ export const Oderbook: FC = () => {
         <div className='grid-in-asks-data flex flex-col-reverse md:flex-col'>
           {asks.map(renderSellIndicator)}
         </div>
-      </OderbookContainer>
+      </OrderbookContainer>
 
       <ToggleMarket onClick={handleToggleMarket} />
     </div>
