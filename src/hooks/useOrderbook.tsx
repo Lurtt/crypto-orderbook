@@ -39,7 +39,7 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
 
   useEffect(() => {
     if (FEED_BOOK_UI_SNAPSHOT === lastJsonMessage?.feed) {
-      dispatch({ type: 'CREATE_SNAPSHOT', playload: lastJsonMessage });
+      dispatch({ type: 'CREATE_SNAPSHOT', payload: lastJsonMessage });
     }
   }, [ dispatch, lastJsonMessage ]);
 
