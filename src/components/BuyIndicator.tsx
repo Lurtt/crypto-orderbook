@@ -18,9 +18,9 @@ export const BuyIndicator: FC<Props> = ({ data, maxTotal }) => {
 
   return (
     <div style={{ background }} className='flex flex-row-reverse md:flex-row py-1'>
-      <div className='flex-1'>{total && numberFormat.format(total)}</div>
-      <div className='flex-1'>{numberFormat.format(size)}</div>
-      <div className='flex-1 text-green-500'>{priceFormat.format(price)}</div>
+      <div className='flex-1' data-testid='buy-indicator-total'>{total && numberFormat.format(total)}</div>
+      <div className='flex-1' data-testid='buy-indicator-size'>{numberFormat.format(size)}</div>
+      <div className='flex-1 text-green-500' data-testid='buy-indicator-price'>{priceFormat.format(price)}</div>
     </div>
   );
 };

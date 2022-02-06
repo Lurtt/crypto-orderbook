@@ -15,7 +15,7 @@ type Action =
   | { type: 'PAUSE' }
   | { type: 'CONTINUE' }
   | { type: 'TOGGLE_MARKETS'; payload: { sendJsonMessage: SendJsonMessage } }
-  | { type: 'CREATE_SNAPSHOT'; playload: IndicatorState }
+  | { type: 'CREATE_SNAPSHOT'; payload: IndicatorState }
   | { type: 'UPDATE_SNAPSHOT'; payload: { data: IndicatorState, maxRecords: number } }
   | { type: 'SLICE_SNAPSHOT'; payload: { maxRecords: number } }
 
@@ -48,8 +48,8 @@ const indicatorsReducer = (draft: IndicatorState, action: Action) => {
       draft.isPaused = false;
       break;
     case 'CREATE_SNAPSHOT':
-      draft.bids = action.playload.bids;
-      draft.asks = action.playload.asks;
+      draft.bids = action.payload.bids;
+      draft.asks = action.payload.asks;
       break;
     case 'UPDATE_SNAPSHOT':
       draft.bids = action.payload.data.bids
