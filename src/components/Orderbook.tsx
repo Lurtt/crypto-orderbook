@@ -25,12 +25,12 @@ export const Orderbook: FC = () => {
         <Title className='grid-in-title'/>
         <Spread className="grid-in-spread" />
 
-        <IndicatorHeadline className='grid-in-bids-title hidden md:flex' />
+        <IndicatorHeadline className='grid-in-bids-title hidden md:flex' data-testid="indicator-headline-bids" />
         <div className='grid-in-bids-data'>
           {bids.map(renderBuyIndicator)}
         </div>
 
-        <IndicatorHeadline className='grid-in-asks-title flex flex-row-reverse md:text-right' />
+        <IndicatorHeadline className='grid-in-asks-title flex flex-row-reverse md:text-right' data-testid="indicator-headline-asks" />
         <div className='grid-in-asks-data flex flex-col-reverse md:flex-col'>
           {asks.map(renderSellIndicator)}
         </div>
