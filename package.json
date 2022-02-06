@@ -35,6 +35,9 @@
       "react-app/jest"
     ]
   },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
+  },
   "browserslist": {
     "production": [
       ">0.2%",
