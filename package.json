@@ -23,14 +23,20 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:cy:open": "start-server-and-test start http://localhost:3000 cy:open",
+    "test:cy:run": "start-server-and-test start http://localhost:3000 cy:run",
     "lint": "react-scripts lint",
-    "eject": "react-scripts eject"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
   },
   "browserslist": {
     "production": [
@@ -48,7 +54,14 @@
     "@savvywombat/tailwindcss-grid-areas": "^2.0.0",
     "@testing-library/react-hooks": "^7.0.2",
     "autoprefixer": "^10.4.2",
+    "cypress": "^9.4.1",
+    "cypress-cucumber-preprocessor": "^4.3.1",
     "postcss": "^8.4.5",
+    "start-server-and-test": "^1.14.0",
     "tailwindcss": "^3.0.16"
+  },
+  "volta": {
+    "node": "16.13.2",
+    "npm": "8.4.1"
   }
 }

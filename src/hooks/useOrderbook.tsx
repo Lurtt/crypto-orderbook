@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import useWebSocket from 'react-use-websocket';
-import { useDocumentVisibility } from 'ahooks';
+import { useDocumentVisibility, useTitle } from 'ahooks';
 
 import {
   WEBSOCKET_URL,
   DOCUMENT_VISIBILITY_HIDDEN,
   FEED_BOOK_UI_SNAPSHOT,
   FEED_BOOK_UI,
+  PI_XBTUSD,
 } from 'app-constants';
 import { useIndicators } from 'contexts/indicators-context/IndicatorsContext';
 
@@ -22,6 +23,14 @@ export const useOrderbook = ({ maxRecords }: UseOrderbook) => {
     readyState,
   } = useWebSocket(WEBSOCKET_URL, { shouldReconnect: () => true });
   const { state, dispatch } = useIndicators();
+
+  const browserTitle = useMemo(() => {
+    const pair = state.product_ids[0] === PI_XBTUSD ? 'BTC-USD' : 'ETH-USD';
+
+    return `Order Book ${pair}`;
+  }, [state.product_ids]);
+
+  useTitle(browserTitle);
 
   useEffect(() => {
     if (DOCUMENT_VISIBILITY_HIDDEN === documentVisibility) {

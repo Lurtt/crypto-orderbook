@@ -8,6 +8,7 @@ export const Toast: FC<Props> = ({ onClick }) => (
   <div
     className="sticky top-4 w-full max-w-xs p-4 mx-auto text-gray-500 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-400"
     role="alert"
+    data-testid="toast"
   >
     <div className="flex">
       <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:text-blue-300 dark:bg-blue-900">
@@ -21,7 +22,8 @@ export const Toast: FC<Props> = ({ onClick }) => (
         <p className="mb-2 text-sm font-normal">Session cancelled due to inactivity.</p>
         <button
           onClick={onClick}
-          className="inline-flex justify-center px-8 py-2 text-xs font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+          className="inline-flex justify-center px-8 py-2 text-xs font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+          data-testid="toast-button-reconnect">
           Reconnect
         </button>
       </div>
