@@ -1,4 +1,4 @@
-import { When } from "cypress-cucumber-preprocessor/steps";
+import { When } from 'cypress-cucumber-preprocessor/steps';
 
 When('I open app on mobile', () => {
   cy.viewport('iphone-6');

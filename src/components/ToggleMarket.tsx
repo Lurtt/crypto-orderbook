@@ -5,6 +5,6 @@ interface Props {
 }
 
 export const ToggleMarket: FC<Props> = ({ onClick }) => (
-  <button className='block mx-auto px-5 py-2 rounded-md bg-purple-600' onClick={onClick}>Toggle Feed</button>
+  <button className='block mx-auto px-5 py-2 rounded-md bg-purple-600' onClick={onClick} data-testid="toggle-market">Toggle Feed</button>
 );
 
