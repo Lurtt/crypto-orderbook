@@ -17,12 +17,12 @@ Then('I see the title', () => {
   cy.get(TITLE).should('have.text', 'Order Book');
 });
 
-Then('I see bids and asks columns', () => {
+Then('I see buys and sells columns', () => {
   cy.get(INDICATOR_HEADLINE_BUYS).should('be.visible');
   cy.get(INDICATOR_HEADLINE_SELLS).should('be.visible');
 });
 
-Then('I see only asks column', () => {
+Then('I see only sells column', () => {
   cy.get(INDICATOR_HEADLINE_BUYS).should('not.be.visible');
   cy.get(INDICATOR_HEADLINE_SELLS).should('be.visible');
 });
