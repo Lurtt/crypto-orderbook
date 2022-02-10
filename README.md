@@ -2,6 +2,12 @@
 
 Live demo: [https://crypto-orderbook-iota.vercel.app/](https://crypto-orderbook-iota.vercel.app/)
 
+## Before you start
+
+### `npm ci`
+
+install all dependencies
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -28,3 +34,8 @@ Launches the cypress tests in background.
 Builds the app for production to the `build` folder.
 
 The build is minified and the filenames include the hashes.
+
+## Nice to have
+
+- [ ] https://github.com/Lurtt/crypto-orderbook/issues/29
+- [ ] https://github.com/Lurtt/crypto-orderbook/issues/30
