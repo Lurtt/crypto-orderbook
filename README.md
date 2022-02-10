@@ -37,5 +37,5 @@ The build is minified and the filenames include the hashes.
 
 ## Nice to have
 
-- [ ] https://github.com/Lurtt/crypto-orderbook/issues/29
-- [ ] https://github.com/Lurtt/crypto-orderbook/issues/30
+- [ ] [Implement i18n](https://github.com/Lurtt/crypto-orderbook/issues/29)
+- [ ] [Add Storybook](https://github.com/Lurtt/crypto-orderbook/issues/30)
